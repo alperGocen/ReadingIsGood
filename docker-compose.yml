@@ -2,7 +2,7 @@ version: '3.3'
 
 services: 
   db:
-    container_name: postgres22
+    container_name: postgres-container
     image: postgres:latest
     build:
       dockerfile: docker/postgresql/Dockerfile
@@ -18,7 +18,7 @@ services:
       PGDATA: /var/lib/postgresql/data
 
   server:
-    container_name: pro_server
+    container_name: app-container
     image: tomcat:9.0
     build:
       dockerfile: docker/tomcat/Dockerfile
