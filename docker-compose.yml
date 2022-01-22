@@ -1,0 +1,35 @@
+version: '3.3'
+
+services: 
+  db:
+    container_name: postgres22
+    image: postgres:latest
+    build:
+      dockerfile: docker/postgresql/Dockerfile
+      context: .
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: reading_db
+      PGDATA: /var/lib/postgresql/data
+
+  server:
+    container_name: pro_server
+    image: tomcat:9.0
+    build:
+      dockerfile: docker/tomcat/Dockerfile
+      context: .
+      args:
+        PATH: "pro.jar"
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - db
+
+volumes:
+  db_data: {}

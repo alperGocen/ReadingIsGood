@@ -1,0 +1,415 @@
+openapi: 3.0.0
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'http://127.0.0.1:8080/api'
+paths:
+  /api/customer/save:
+    post:
+      tags:
+        - Customer
+      summary: Customer save service
+      operationId: saveCustomer
+      description: Customer save service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/CustomerResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/customer/orders/{customerId}:
+    parameters:
+      - in: path
+        name: customerId
+        schema:
+          type: string
+          format: uuid
+        example: "09270478-aa0f-41b6-90bb-58525164d213"
+        required: true
+    get:
+      tags:
+        - Customer
+      summary: Customer orders service
+      operationId: getCustomerOrders
+      description: Service that returns all orders of a customer
+      responses:
+        200:
+          $ref: '#/components/responses/OrdersResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/book/save:
+    post:
+      tags:
+        - Book
+      summary: Book save service
+      operationId: saveBook
+      description: Book save service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BookResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/book/stock/update:
+    post:
+      tags:
+        - Book
+      summary: Book stock update service
+      operationId: updateBookStock
+      description: Book stock update service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookStockUpdateRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BookStockUpdateResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/order/save:
+    post:
+      tags:
+        - Order
+      summary: Order save service
+      operationId: saveOrder
+      description: Order save service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/OrderResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/order/{orderId}:
+    parameters:
+      - in: path
+        name: orderId
+        schema:
+          type: string
+          format: uuid
+        example: "09270478-aa0f-41b6-90bb-58525164d213"
+        required: true
+    get:
+      tags:
+        - Order
+      summary: Order details service
+      operationId: getOrderDetails
+      description: Service that returns a specific order details
+      responses:
+        200:
+          $ref: '#/components/responses/OrderDetailsResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/orders:
+    parameters:
+      - in: query
+        name: startDate
+        schema:
+          type: string
+        example: "2022-01-01"
+      - in: query
+        name: endDate
+        schema:
+          type: string
+        example: "2022-03-31"
+    get:
+      tags:
+        - Order
+      summary: Order by date filter service
+      operationId: getOrdersBetweenDates
+      description: Service that returns orders between specified dates
+      responses:
+        200:
+          $ref: '#/components/responses/OrdersResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/statistics/{customerId}:
+    parameters:
+      - in: path
+        name: customerId
+        schema:
+          type: string
+          format: uuid
+        example: "09270478-aa0f-41b6-90bb-58525164d213"
+        required: true
+    get:
+      tags:
+        - Statistics
+      summary: Get user's monthly statistics
+      operationId: getUserStatistics
+      description: Service that returns user's monthly statisics
+      responses:
+        200:
+          $ref: '#/components/responses/UserStatisticsResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+  /api/signup:
+    post:
+      tags:
+        - Signup
+      summary: Signup Service
+      operationId: signup
+      description: Signup service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/SignupResponseBody'
+        default:
+          $ref: '#/components/schemas/ErrorResponse'
+components:
+  responses:
+    CustomerResponseBody:
+      description: Customer Save Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerResponse'
+    OrdersResponseBody:
+      description: Customer Orders Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrdersResponse'
+    BookResponseBody:
+      description: Book Save Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BookResponse'
+    OrderResponseBody:
+      description: Book Save Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderResponse'
+    OrderDetailsResponseBody:
+      description: Order Details Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderDetailsResponse'
+    BookStockUpdateResponseBody:
+      description: Book Stock Update Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BookStockUpdateResponse'
+    UserStatisticsResponseBody:
+      description: User Statistics Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserStatisticsResponse'
+    SignupResponseBody:
+      description: User Statistics Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignupResponse'
+  schemas:
+    CustomerRequest:
+      type: object
+      description: Customer Save Request
+      properties:
+        name:
+          type: string
+          description: name of the customer
+          example: "alper"
+        surname:
+          type: string
+          description: surname of the customer
+          example: "gocen"
+    BookRequest:
+      type: object
+      description: Book Save Request
+      properties:
+        name:
+          type: string
+          description: name of the book
+          example: "book1"
+        price:
+          type: number
+          format: bigdecimal
+          description: surname of the customer
+          example: "25.00"
+        addedStock:
+          type: integer
+          description: added stock
+          example: "150"
+    OrderRequest:
+      type: object
+      description: Order Save Request
+      required:
+        - bookOrderList
+      properties:
+        customerId:
+          type: string
+          format: uuid
+        bookOrderList:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookOrder'
+    SignupRequest:
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+    BookStockUpdateRequest:
+      type: object
+      description: Book Stock Update Request
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          description: book id to update
+        stockChange:
+          type: integer
+          description: stock change
+    BaseResponse:
+      type: object
+      description: The most general form of a response
+      properties:
+        success:
+          type: boolean
+          description: indicates if the operation is successful
+          example: true
+        responseMessage:
+          type: string
+          description: response message
+    CustomerResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    OrdersResponse:
+      properties:
+        orderList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    BookResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    BookStockUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    OrderResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    SignupResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    OrderDetailsResponse:
+      properties:
+        orderDetail:
+          $ref: '#/components/schemas/Order'
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    UserStatisticsResponse:
+      properties:
+        statisticList:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserStatistic'
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object
+    ErrorResponse:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        extra:
+          type: string
+        code:
+          type: string
+    Order:
+      properties:
+        orderNumber:
+          type: string
+          description: order number
+        orderCreatationDate:
+          type: string
+          description: creation date of order
+        orderItemList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
+        orderTotalPrice:
+          type: number
+          format: bigdecimal
+    Book:
+      properties:
+        name:
+          type: string
+          description: book name
+        price:
+          type: number
+          format: bigdecimal
+    BookOrder:
+      properties:
+        bookId:
+          type: string
+          format: uuid
+          description: book id
+        numberInBasket:
+          type: integer
+          description: number of items in the basket
+    UserStatistic:
+      properties:
+        month:
+          type: integer
+        year:
+          type: integer
+        totalOrderCount:
+          type: integer
+        totalBookCount:
+          type: integer
+        totalPurchasedAmount:
+          type: number
+          format: bigdecimal
+    LoginResponse:
+      properties:
+        userEmail:
+          type: string
+      allOf:
+        - $ref: '#/components/schemas/BaseResponse'
+        - type: object

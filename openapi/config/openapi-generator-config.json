@@ -1,0 +1,15 @@
+{
+  "java11": "true",
+  "dateLibrary": "java11",
+  "useBeanValidation": "true",
+  "useTags": "true",
+  "generateApiTests": "false",
+  "generateApiDocumentation": "false",
+  "supportingFiles": "false",
+  "serializableModel": "true",
+  "basePackage": "com.rig",
+  "modelPackage": "com.rig.model",
+  "apiPackage": "com.rig.api",
+  "configPackage": "com.rig.config",
+  "interfaceOnly": "true,"
+}
