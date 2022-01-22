@@ -7,9 +7,13 @@ Entity layer represents the database layer, and JPA & Hibernate are used to impl
 Service layer represents where the business logic happens. Every controller calls a service method after a request from a user hits them. While implementing
 services the Dependency Injection (DI) pattern is used.
 
+For model scripting OpenAPI3 is used. Everytime the code is compiled it generates the client requests & responses by adding RIG- prefix in the beginning of their names. In this way, the service and client responses are not mixed with each other.
+
 For securiy, Spring Security with JWT(JSON Web Token) is used, a Stateless Authentication mechanism is performed and every endpoint is secured by using this manner. LoginFilter is where the authentication starts, and after the user is authenticated a token is generated. This token is sent in requests with X-Auth-Token header. Any user having a non-expired JWT token can reach the endpoints.
 
 For unit & integration tests JUnit & Mockito is used, most of the business cases has been tested mostly by the service tests.
+
+The application is containerized using Docker, and it can easily be run with the following instructions.
 
 In order to run the application: 
 
